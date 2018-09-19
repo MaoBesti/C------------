@@ -1,0 +1,35 @@
+11.1结构体类型、数组、指针
+    结构体类型的定义：
+    struct score_table  //定义结构体类型
+    {
+           int number; //定义结构体类型成员
+           char name[30];
+           char sex;
+           int age;
+           char depart[40];
+           float score;
+    };//结构体类型定义结束
+
+    结构体类型变量的定义:两种方式
+    //先定义结构体类型,再定义结构体变量
+    struct score_table  //定义结构体类型
+    {
+           int number; //定义结构体类型成员
+           char name[30];
+           char sex;
+           int age;
+           char depart[40];
+           float score;
+    };//结构体类型定义结束
+    struct score_table student1,student2,student3;
+
+    //定义结构体类型的同时定义结构体变量
+    struct score_table  //定义结构体类型
+    {
+           int number; //定义结构体类型成员
+           char name[30];
+           char sex;
+           int age;
+           char depart[40];
+           float score;
+    }student1,student2,student3;
