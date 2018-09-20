@@ -33,3 +33,117 @@
            char depart[40];
            float score;
     }student1,student2,student3;
+
+11.2 结构体数组的定义和引用
+
+11.3 指向结构体类型数据的指针
+     指向结构体变量的指针
+     struct score_table
+     {
+            long int number;
+            char name[30];
+            char sex;
+            int age;
+            char depart[40];
+            float score[2];
+     }*P;
+     struct score_table student1={2010121601,"刘易君",'M',18,"机械工程",{89.9,93.2}};
+     p=&student1;
+     引用时，需要逐级引用到最低一级成员变量;
+
+     指向结构体数组的指针
+
+11.4 链表结构及应用
+     11.4.1 静态链表的创建与引用
+     #define NULL 0
+     struct student
+     {
+          long int number;
+          char name[20];
+          float score;
+          struct student *next;//定义结点成员指针
+     };
+     main()
+     {
+          struct student st1,st2,st3,*head;
+          head=&st1;
+          st1.next=&st2;
+          st2.next=&st3;
+          st3.next=NULL;
+
+          st1.num=20100030216L;strcpy(st1.name,"陈立新");st1.core=95.8;
+          while(head!=NULL)
+          {
+
+          }
+     }
+
+     11.4.2动态链表的创建与引用
+     1.malloc()函数
+     malloc()函数用于申请分配单个结构体变量的内存空间。
+     用以存放一个结构体类型变量的数据，同时使结构体指针P，
+     指向该结构体变量存储空间的起始地址。
+     malloc()函数原型为void类型，一般在使用时用强制类型转换将其转换为所需类型。如：
+     p=(struct student*)malloc(sizeof(struct student));
+
+     2.calloc()函数
+     calloc()函数用于申请一组结构体变量内存空间
+     例如：
+     使用calloc()函数申请分配长度为12个结构体变量组成的一维数组内存空间，并使结构体指针Ps指向
+     分配成功的内存空间起始地址。
+     struct student *Ps;
+
+     3.free()函数
+     Ps=(struct student*)calloc(12,sizeof(struct student));
+     free(*Ps);//释放Ps指向的一维结构体数组所占用的内存空间
+
+     11.4.3单向动态链表的创建与引用
+     创建动态链表的过程，就是按已定义的结构体类型，逐个开辟内存空间，创建结点，
+     输入数据并建立结点之间的链接，形成链表结构。
+     1.建立单向链表
+
+     #include"malloc.h"
+     #include<stdio.h>
+     #include<stdlib.h>
+     #define NULL 0
+     struct student
+     {
+           long int number;
+           char name[20];
+           float score;
+           struct student *next;
+     };
+     struct student  *creat(struct student *head);//创建结点函数原型声明
+     void putout(struct student *head);//输出结点函数声明
+
+     void main()
+     {
+          struct student *head;//定义链表头指针
+          head=NULL;//赋初值用于创建链表表头
+          head=creat(head);//调用创建动态单链表结点函数
+          putout(head);//调用输出单链表数据函数
+     }
+     struct student *creat(struct student *head)//定义创建链表结点函数，返回链表头指针
+     {
+         int n=1;
+         struct student *p1,*p2;
+         p1=p2=(struct student*)malloc(sizeof(struct student));//申请新结点内存空间
+         printf("Input %dth number,name,score:\n",n++);
+         scanf("%d%s%f",&p1->number,&p1->name,&p1->score);//输入结点数据
+         p1->next=NULL;//将新结点p1的指针域next置空值
+         while(p1->number>0)//输入结点学号大于0，表示有学生数据
+         {
+              if(head=NULL)
+                  head=p1;//上结点为空，第一结点内存空间为表头
+              else
+                  p2->next=p1;//上结点非空时，当前结点接入上结点
+              p2=p1;//移动p2指向当前结点
+              p1=(struct student*)malloc(sizeof(struct student));//p1指向申请下一个新结点
+              printf("Input %dth number,name,score:\n",n++);
+              scanf("%d%s%f",&p1->number,&p1->name,&p1->score);//输入下一个结点数据
+              p1->next=NULL;//下一个结点未接入之前，指针域置空
+         }
+         free(p1);//释放新开辟而未接入链表结点所占用的内存空间
+         return head;//返回链表头指针作为函数值
+
+     }
